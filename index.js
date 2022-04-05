@@ -1,6 +1,6 @@
 const { ApolloServer } = require("apollo-server");
 const { typeDefs } = require("./schema/type-defs");
-const { resolvers } = require("./schema/resolvers")
+const { resolvers } = require("./schema/resolvers");
 
 // typeDefs: all piece of data, every query defined will exist inside typeDefs
 //resolvers: all the funcions that resolve those types, like make calls to apis, 
@@ -9,5 +9,5 @@ const { resolvers } = require("./schema/resolvers")
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen().then(({ url }) => {
-    console.log( `Your API is running at ${url}`)
-})
+    console.log(`YOUR API IS RUNNING AT: ${url} :)`);
+  });
