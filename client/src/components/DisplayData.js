@@ -48,7 +48,7 @@ function DisplayData() {
     const [age, setAge] = useState(0);
     const [nationality, setNationality] = useState("");
 
-    const { data, loading, error } = useQuery(QUERY_ALL_USERS)
+    const { data, loading, error, refetch } = useQuery(QUERY_ALL_USERS) // refetch:
     const { data: movieData} = useQuery(QUERY_ALL_MOVIES)
     const [ fetchMovie, {data: movieSearchedData, error: movieError},] = useLazyQuery(GET_MOVIE_BY_NAME);
     // when we call the fetchMovie function we fetch the data.
@@ -92,7 +92,9 @@ function DisplayData() {
             />
             <button 
                 onClick={() => {
-                    createUser({variables: { input: { name, username, age:21, nationality }}})
+                    createUser({variables: { input: { name, username, age:Number(age), nationality }}})
+
+                    refetch()
                 }}
             >
                 Create User
@@ -106,6 +108,7 @@ function DisplayData() {
                     <div key={user.id}>
                         <h2>Name: { user.name}</h2>
                         <h2>Nationality: { user.nationality}</h2>
+                        <h2>Age: { user.age}</h2>
                     </div>
                 );
         })}

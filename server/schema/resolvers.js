@@ -7,12 +7,14 @@ const _ = require("lodash");
 const resolvers = {
     Query: {
         // User Resolvers
-        users: () => {
+        users: (parent, args, contex, info) => {
             //this is the place where you can make an api call
             // to your database go get data about users for ex.
-            return UserList
+            if (UserList) return {users: UserList }; // complicated checkout other sources
+
+            return { messages: "There was an error"}
         },
-        user: (parent, args) => {
+        user: (parent, args, contex, info) => {
             const id = args.id;
             const user  = _.find(UserList, { id: Number(id) });
             return user;
@@ -68,6 +70,20 @@ const resolvers = {
             return null;
         },
     },
+    // handle the error - read more information
+    UsersResult: {
+        __resolveType(obj) {    // from Apollo
+          if(obj.users) {
+            return "UsersSuccessfulResult"
+          }
+
+          if (obj.message) {
+            return "UsersErrorResult"
+          }
+
+          return null; 
+        }    
+    }
 };
 
 module.exports = { resolvers };

@@ -19,7 +19,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User!]!
+    users: UsersResult #handling the error with union 
     user(id: ID!): User!
     movies: [Movie!]!
     movie(name: String!): Movie!
@@ -53,6 +53,18 @@ const typeDefs = gql`
     CHILE
     UKRAINE
   }
+
+  # Error Handling 
+  type UsersSucessfulResult {
+    users: [User!]!
+  }
+
+  type UsersErrorResult {
+    message: String!
+  }
+
+  union UsersResult = UsersSucessfulResult | UsersErrorResult 
+
 `;
 
 module.exports = { typeDefs };
